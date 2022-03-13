@@ -1,5 +1,7 @@
 <?php
 
+require_once('functions.php');
+
 const ROOT = __DIR__;
 
 const LAYOUTS = [
