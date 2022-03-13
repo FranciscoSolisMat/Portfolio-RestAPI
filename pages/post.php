@@ -13,6 +13,9 @@ $errormsg = '';
 
 $data = $_SERVER['REQUEST_METHOD'] == 'POST' ? $_POST : [];
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
+	if(empty($data['created_at'])) {
+		$data['created_at'] = date('Y-m-d H:i:s');
+	}
     if(isset($data['name']) && isset($data['created_at']) && !empty($data['name']) && !empty($data['created_at'])) {
         // Check if the user exists
         $statement = $db->prepare('SELECT COUNT(id) FROM users WHERE name = :username');
@@ -24,7 +27,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         } else {
 	        $statement = $db->prepare('INSERT INTO users (name, created_at) VALUES (:username, :created_at)');
             // Turn the created_at date into a timestamp
-            $strtotime = strtotime($data['created_at']);
+            $strtotime = strtotime($data['created_at']) * 1000;
 	        $statement->bindParam(':username', $data['name']);
 	        $statement->bindParam(':created_at', $strtotime);
 	        $result = $statement->execute();
