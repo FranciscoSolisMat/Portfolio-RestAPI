@@ -61,6 +61,11 @@ include_once(LAYOUTS['head']);
 				$event.stopPropagation()
 				return false;
 			}
+            
+            let currentQuery = new URLSearchParams(window.location.search).get('query') || ''
+            if(currentQuery && currentQuery.length > 0){
+                document.getElementById('query').value = currentQuery
+            }
 		</script>
 	</form>
 <?php
