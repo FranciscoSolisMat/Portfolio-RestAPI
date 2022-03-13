@@ -12,12 +12,13 @@ if(isset($_GET['image'])){
 	$filename = basename($file);
 	$file_extension = strtolower(substr(strrchr($filename,"."),1));
 	
-	$ctype = match ($file_extension) {
-		"gif" => "image/gif",
-		"jpeg", "jpg" => "image/jpeg",
-		"svg" => "image/svg+xml",
-		default => "image/png",
-	};
+	switch($file_extension) {
+		case 'gif': $ctype = 'image/gif'; break;
+		case 'jpg':
+		case 'jpeg': $ctype = 'image/jpeg'; break;
+		case 'svg': $ctype = 'image/svg+xml'; break;
+		default: $ctype = 'image/png'; break;
+	}
 	
 	header('Content-type: ' . $ctype);
 	readfile($file);
